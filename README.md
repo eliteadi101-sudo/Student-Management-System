@@ -163,28 +163,3 @@ student-management-system/
 ├── README.md
 └── server.js
 ```
-
-## Upload to GitHub
-
-1. Create an empty GitHub repository.
-2. Open a terminal in this project directory.
-3. Run:
-
-```bash
-git init
-git add .
-git commit -m "Build student management system"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-git push -u origin main
-```
-
-Replace the remote URL with your own repository URL. Keep `.env` and all real passwords out of GitHub.
-
-## Notes and limitations
-
-- This is a learning/demo project. It does not include user login, role-based permissions, deployment configuration, or audit logs.
-- Before using it for real student data, add authentication and authorization, HTTPS, backups, stronger operational monitoring, and a privacy policy.
-- Deleting a student cascades to that student's attendance and marks.
-- Each student can have one attendance record per date. Saving another status for the same date updates the existing record.
-- Each student can have one record for a given subject and exam. Saving that combination updates its score.
