@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student records, attendance, marks, and results dashboard">
+  <title>CampusDesk | Student Management</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">C</span><span>CampusDesk<small>STUDENT PORTAL</small></span></a>
+    <p class="nav-label">WORKSPACE</p>
+    <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+    <button class="nav-item" data-view="students"><span>♙</span> Students</button>
+    <button class="nav-item" data-view="attendance"><span>✓</span> Attendance</button>
+    <button class="nav-item" data-view="marks"><span>▤</span> Marks</button>
+    <button class="nav-item" data-view="results"><span>◈</span> Results</button>
+    <div class="sidebar-bottom"><div class="avatar">AD</div><div><strong>Administrator</strong><small>School management</small></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">STUDENT ADMINISTRATION</p><h1 id="page-title">Dashboard</h1></div>
+      <div class="top-actions"><span class="today" id="today-label"></span><button class="primary" id="quick-add">＋ Add student</button></div>
+    </header>
+
+    <section class="view active" id="view-dashboard">
+      <div class="welcome"><div><p class="eyebrow light">OVERVIEW</p><h2>Make every student count.</h2><p>Manage student information, attendance, and academic performance in one place.</p></div><div class="welcome-icon">✦</div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon violet">♙</span></div><strong id="stat-students">—</strong><small>Registered student records</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Attendance today</span><span class="stat-icon blue">✓</span></div><strong id="stat-attendance">—</strong><small id="stat-attendance-sub">Records submitted today</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Present today</span><span class="stat-icon green">◉</span></div><strong id="stat-present">—</strong><small>Marked present today</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Average score</span><span class="stat-icon orange">↗</span></div><strong id="stat-average">—%</strong><small>Across all mark entries</small></article>
+      </div>
+      <div class="panel"><div class="panel-heading"><div><h3>Quick actions</h3><p>Jump directly to a common task.</p></div></div><div class="quick-grid">
+        <button class="quick-action" data-go="students"><span class="quick-icon violet">♙</span><strong>Manage students</strong><small>Add, edit, or remove student profiles</small><span class="arrow">↗</span></button>
+        <button class="quick-action" data-go="attendance"><span class="quick-icon green">✓</span><strong>Record attendance</strong><small>Mark daily student attendance</small><span class="arrow">↗</span></button>
+        <button class="quick-action" data-go="marks"><span class="quick-icon orange">▤</span><strong>Enter marks</strong><small>Save subject and exam scores</small><span class="arrow">↗</span></button>
+        <button class="quick-action" data-go="results"><span class="quick-icon blue">◈</span><strong>View results</strong><small>Review grades and overall performance</small><span class="arrow">↗</span></button>
+      </div></div>
+      <div class="panel"><div class="panel-heading"><div><h3>Recently added students</h3><p>Your latest student records.</p></div><button class="text-button" data-go="students">View all →</button></div><div id="recent-students" class="table-wrap"></div></div>
+    </section>
+
+    <section class="view" id="view-students">
+      <div class="section-intro"><div><h2>Student directory</h2><p>Keep student profiles accurate and up to date.</p></div><button class="primary" id="add-student">＋ Add student</button></div>
+      <div class="panel"><div class="toolbar"><label class="search-box"><span>⌕</span><input id="student-search" placeholder="Search name, roll number, class..." aria-label="Search students"></label><span id="student-count" class="muted"></span></div><div id="students-table" class="table-wrap"></div></div>
+    </section>
+
+    <section class="view" id="view-attendance">
+      <div class="section-intro"><div><h2>Attendance register</h2><p>Record attendance by date. A student can have one record per day.</p></div></div>
+      <div class="panel"><form id="attendance-form" class="form-grid compact">
+        <label>Student<select name="student_id" id="attendance-student" required></select></label>
+        <label>Date<input type="date" name="attendance_date" id="attendance-date" required></label>
+        <label>Status<select name="status" required><option>Present</option><option>Absent</option><option>Late</option><option>Excused</option></select></label>
+        <label>Notes (optional)<input name="notes" maxlength="255" placeholder="Reason or note"></label>
+        <div class="form-actions"><button class="primary" type="submit">Save attendance</button></div>
+      </form></div>
+      <div class="panel"><div class="panel-heading"><div><h3>Attendance records</h3><p>Filter records by date.</p></div><input type="date" id="attendance-filter" aria-label="Filter attendance by date"></div><div id="attendance-table" class="table-wrap"></div></div>
+    </section>
+
+    <section class="view" id="view-marks">
+      <div class="section-intro"><div><h2>Marks & assessments</h2><p>Store scores by student, subject, and exam.</p></div></div>
+      <div class="panel"><form id="marks-form" class="form-grid compact">
+        <label>Student<select name="student_id" id="marks-student" required></select></label>
+        <label>Subject<input name="subject" maxlength="100" placeholder="e.g. Mathematics" required></label>
+        <label>Exam name<input name="exam_name" maxlength="100" value="Final Exam" required></label>
+        <label>Marks obtained<input name="marks_obtained" type="number" min="0" step="0.01" placeholder="85" required></label>
+        <label>Maximum marks<input name="max_marks" type="number" min="0.01" step="0.01" value="100" required></label>
+        <div class="form-actions"><button class="primary" type="submit">Save marks</button></div>
+      </form></div>
+      <div class="panel"><div class="panel-heading"><div><h3>Assessment records</h3><p>Grade is calculated automatically.</p></div></div><div id="marks-table" class="table-wrap"></div></div>
+    </section>
+
+    <section class="view" id="view-results">
+      <div class="section-intro"><div><h2>Academic results</h2><p>Overall percentage is calculated from total marks obtained / total maximum marks.</p></div><button class="secondary" id="export-results">↓ Export CSV</button></div>
+      <div class="panel"><div class="toolbar"><label class="search-box"><span>⌕</span><input id="results-search" placeholder="Search results..." aria-label="Search results"></label><span id="results-count" class="muted"></span></div><div id="results-table" class="table-wrap"></div></div>
+      <p class="note">Passing threshold is 35%. Change the threshold in <code>server.js</code> if your institution uses a different rule. Students without marks are shown as Pending.</p>
+    </section>
+    <footer>CampusDesk · Student Management System <span>Built for learning and administration</span></footer>
+  </main>
+
+  <dialog id="student-dialog" class="modal">
+    <form id="student-form">
+      <div class="modal-header"><div><p class="eyebrow">STUDENT PROFILE</p><h2 id="student-dialog-title">Add student</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <label>Roll number *<input name="roll_number" maxlength="30" required placeholder="e.g. CS-001"></label>
+        <label>First name *<input name="first_name" maxlength="80" required></label>
+        <label>Last name *<input name="last_name" maxlength="80" required></label>
+        <label>Email<input name="email" type="email" maxlength="150"></label>
+        <label>Phone<input name="phone" maxlength="30"></label>
+        <label>Class *<input name="class_name" maxlength="50" required placeholder="e.g. BCA 2nd Year"></label>
+        <label>Section<input name="section" maxlength="20" value="A"></label>
+        <label>Date of birth<input name="date_of_birth" type="date"></label>
+      </div>
+      <p class="form-hint">Fields marked * are required. Roll number must be unique.</p>
+      <div class="modal-actions"><button type="button" class="secondary" id="cancel-dialog">Cancel</button><button class="primary" type="submit">Save student</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
